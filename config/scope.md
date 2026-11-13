@@ -10,7 +10,11 @@ Where a trend spans domains, file it under the domain where the change originate
 
 ## Lens
 
-The audience is senior airline commercial leaders and commercial analysts.  Industry relevance is judged against pricing, revenue management, network planning, distribution, loyalty, ancillaries and commercial analytics.
+The radar is industry-agnostic at its core.  Trends are identified and their importance is scored for enterprises in general.
+
+Industry relevance is a separate, second layer.  Each trend is scored for each industry listed in `config/industries.json`, judged against how firms in that industry compete and operate, with particular attention to data, analytics and AI functions.  Industry-specific evidence informs these scores but never on its own determines a trend's importance.
+
+Interpretation for a specific customer is out of scope for scheduled runs.  It is produced on demand from the register, outside this repo.
 
 ## Horizon
 
@@ -18,6 +22,7 @@ Two to three years, with longer-range signals recorded on the watch list.
 
 ## Out of scope
 
-- Consumer AI products, except where they change how travellers search and book.
+- Consumer AI products, except where they change how consumers or business buyers search, compare and buy.
 - Hardware and chips, except where they materially change AI cost or availability.
+- Defence and security topics beyond public policy, procurement and published strategy.
 - Customer-specific or confidential information of any kind.

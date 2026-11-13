@@ -1,8 +1,8 @@
 # Trend Radar - run procedure
 
-You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and `config/` for the rubric, sources and scope before starting.  The `docs/` folder is human reference material: do not read it for instructions and do not modify it.
+You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and every file in `config/` (rubric, sources, scope and industries) before starting.  The `docs/` folder is human reference material: do not read it for instructions and do not modify it.
 
-Procedure version: 1.3
+Procedure version: 2.0
 
 ## Principles
 
@@ -11,6 +11,7 @@ Procedure version: 1.3
 - **No fabrication.**  Every claim in a briefing traces to a ledger entry.  If you cannot open a page, say so and do not cite it.
 - **Prefer authoritative sources.**  Follow the tiers in `config/sources.md`.  Tier 4 sources can support a point but cannot on their own move a score.
 - **Copyright.**  Paraphrase.  Never store or reproduce article text.  At most one quote per source, under 15 words.
+- **Industry-agnostic core.**  Trends and their importance are judged for enterprises in general.  Industry relevance is a separate score per industry in `config/industries.json`.  Never let evidence from one industry inflate a trend's importance.
 - **Dates matter.**  Use the run date (today, UTC) as `run_id` in `YYYY-MM-DD` form.  Record the publication date of each source separately from the retrieval date.
 - **Verify specifics.**  Page fetches return summaries.  When a ledger entry, score change or briefing claim rests on a specific figure, forecast or publication date, fetch the page again with a narrow question asking for that exact detail, rather than relying on a general summary.  If the detail cannot be confirmed, say so in the ledger notes.
 
@@ -19,17 +20,22 @@ Procedure version: 1.3
 1. Set `RUN_ID` to today's date in UTC.
 2. Read `state/run_log.jsonl`.  If `RUN_ID` already exists, stop: this run has already happened.  Do not modify anything.
 3. Note `PREV_RUN` (the latest entry) and its date.  Set the lookback window from `PREV_RUN` minus 14 days to today.  The overlap catches late-indexed items.
-4. Do not read `proposals/` yet.  Decisions are applied at the start of Step 2, after the blind scan, so that they do not shape your fresh view of the field.
+4. Choose `DEEP_DIVE`, this run's deep-dive industry.  Find the most recent successful run in `state/run_log.jsonl` with a `deep_dive_industry` value and take the next industry in `deep_dive_rotation` in `config/industries.json`, wrapping round at the end.  If no run has one, take the first industry in the rotation.
+5. Do not read `proposals/` yet.  Decisions are applied at the start of Step 2, after the blind scan, so that they do not shape your fresh view of the field.
 
 ## Step 1 - Blind scan (Phase A)
 
 Do not open `state/register.json`, `state/watchlist.json`, `proposals/` or any file under `runs/` during this step.  The purpose is to see the field fresh, without anchoring on last run's conclusions.
 
-1. Research each of the three domains in `config/scope.md` using the search angles in `config/sources.md`.  Run at least 6 searches per domain plus at least 4 on the airline industry lens.  Fetch and read the important pages rather than relying on snippets.
+1. Research in three layers, fetching and reading the important pages rather than relying on snippets:
+   - **Core scan:** each of the three domains in `config/scope.md`, using the search angles in `config/sources.md`, with at least 6 searches per domain.  Keep this layer industry-agnostic.
+   - **Industry light pass:** at least 1 search for every industry in `config/industries.json`, looking for significant developments on the trends or new industry-specific evidence.
+   - **Deep dive:** at least 4 further searches on `DEEP_DIVE`, using its search angles and tier 2 bodies.
 2. Prioritise material published within the lookback window.  Also capture any major publication on the calendar in `config/sources.md` that has appeared since `PREV_RUN`.
 3. Write `runs/RUN_ID/blind_scan.md` containing:
    - Your candidate list of 3 to 6 trends per domain, each with a one-line definition.
    - For each candidate, the sources supporting it (URL, publisher, tier, publication date, one-sentence paraphrase).
+   - Industry signals: for each industry, anything notable from the light pass, and a fuller section for `DEEP_DIVE`.
    - Anything that cuts against a commonly held view.
    - Gaps: searches that returned little, or pages you could not access.
 
@@ -38,7 +44,7 @@ Do not open `state/register.json`, `state/watchlist.json`, `proposals/` or any f
 1. Now read `state/register.json`, `state/watchlist.json`, `state/ledger.jsonl`, the latest `runs/*/snapshot.json` and `runs/*/briefing.md`, and both files in `proposals/`.
    - First, detect direct human edits as described in Step 4b.
    - Then apply outstanding decisions as described in Step 4a, so that reconciliation and scoring work on the updated register.
-2. For each source in the blind scan, check the ledger for the same URL (ignore query strings, fragments and trailing slashes).  Skip duplicates.  Append each genuinely new source to `state/ledger.jsonl` with the next `EV-` number, tagging `supports` and `contradicts` with trend or watch-list IDs.
+2. For each source in the blind scan, check the ledger for the same URL (ignore query strings, fragments and trailing slashes).  Skip duplicates.  Append each genuinely new source to `state/ledger.jsonl` with the next `EV-` number, tagging `supports` and `contradicts` with trend or watch-list IDs.  If the evidence is specific to one or more industries, list their keys in `industries`; leave it empty for general evidence.
 3. Map each blind-scan candidate to an existing trend ID where the substance matches, even if your wording differs.  Record the mapping in a "Reconciliation" section at the end of `blind_scan.md`.
 4. For candidates that do not map:
    - If evidence is thin (fewer than two independent tier 1-3 sources), add or update a watch-list item.
@@ -50,11 +56,16 @@ Do not open `state/register.json`, `state/watchlist.json`, `proposals/` or any f
 Apply `config/rubric.md` to every active trend.
 
 1. Set `importance_prev` to the current `importance` before changing anything.
-2. Change `importance`, `industry_relevance`, `momentum` or `confidence` only where the rubric allows, citing the new evidence IDs in `rationale`.
-3. Respect the hysteresis rules in the rubric.
-4. Append an entry to each active trend's `history`, even if nothing changed.  If Step 4a already added an entry for this run (for example with a merge `event`), update that entry rather than adding a second one.  History entries take the form `{"run_id": ..., "importance": ..., "momentum": ..., "event": optional text}`.
-5. Update `last_changed` only for trends whose scores changed, and `last_evidence_date` where new evidence arrived.
-6. Increment `runs_seen` on watch-list items with new evidence.  Set items to `dropped` if they have had no new evidence for 3 consecutive runs.
+2. Change `importance`, `momentum` or `confidence` only where the rubric allows, citing the new evidence IDs in `rationale`.
+3. Score `industry_relevance` for every industry key:
+   - Replace any `null` with a first assessment, citing evidence.  Where there is no industry-specific evidence, a generally important trend defaults to 3.
+   - Scores of 4 or 5 require at least one ledger entry tagged with that industry.
+   - Otherwise change a score only where the rubric allows.
+   - Keep `industry_notes` for any industry scored 4 or 5, saying in one sentence why the trend matters to that industry.  Notes for other industries are optional.
+4. Respect the hysteresis rules in the rubric.
+5. Append an entry to each active trend's `history`, even if nothing changed.  If Step 4a already added an entry for this run (for example with a merge `event`), update that entry rather than adding a second one.  History entries take the form `{"run_id": ..., "importance": ..., "momentum": ..., "event": optional text}`.
+6. Update `last_changed` only for trends whose scores changed, and `last_evidence_date` where new evidence arrived.
+7. Increment `runs_seen` on watch-list items with new evidence.  Set items to `dropped` if they have had no new evidence for 3 consecutive runs.
 
 ## Step 4 - Proposals and decisions
 
@@ -100,7 +111,7 @@ Any proposal with `Runs pending` of 3 or more is stale.  List stale proposals fi
 2. Run `python3 scripts/make_snapshot.py --run-id RUN_ID --mode scheduled`.  This writes `runs/RUN_ID/snapshot.json` and prints the diff against `PREV_RUN`.  Use that diff, not your memory, as the basis for the briefing.
 3. Write `runs/RUN_ID/briefing.md` using the structure below.
 4. Append one line to `state/run_log.jsonl`:
-   `{"run_id": "RUN_ID", "mode": "scheduled", "procedure_version": "1.1", "rubric_version": "...", "searches": N, "new_evidence": N, "summary": "one sentence"}`
+   `{"run_id": "RUN_ID", "mode": "scheduled", "procedure_version": "2.0", "rubric_version": "...", "deep_dive_industry": "DEEP_DIVE", "searches": N, "new_evidence": N, "summary": "one sentence"}`
 
 ### Briefing structure
 
@@ -125,11 +136,17 @@ What was approved, rejected or withdrawn, and the effect on the register.
 ## Human edits since last run
 Direct register changes detected in Step 4b, or "None".
 
-## What it means for the airline commercial analyst
-A short paragraph, grounded in this run's evidence.
+## Industry view
+For each industry whose relevance scores changed, two or three sentences on what moved and why it matters to that industry.  Industries with no changes are listed in one line.
+
+## Deep dive: <DEEP_DIVE industry name>
+A short section on the most important developments for that industry, grounded in this run's evidence.
 
 ## Full register
-A table: ID, title, importance (prev), industry relevance, momentum, confidence.
+A table: ID, title, importance (prev), momentum, confidence.
+
+## Industry relevance
+A table of trends against industries showing each relevance score, with changes this run marked, for example 4 (was 3).
 
 ## Evidence quality notes
 Secondary reporting, access failures, sources that should be verified.

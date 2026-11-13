@@ -1,0 +1,179 @@
+{
+  "version": "1.0",
+  "note": "Edit this file to add, remove or rename industries. Keys are permanent identifiers used in the register; never reuse or rename a key. The deep-dive rotation runs in the order given.",
+  "industries": [
+    {
+      "key": "financial_services",
+      "name": "Financial Services",
+      "scope": "Banking, insurance, capital markets and payments.",
+      "tier2_bodies": [
+        "European Banking Authority",
+        "ECB",
+        "Bank of England and PRA",
+        "FCA",
+        "Bank for International Settlements",
+        "IOSCO"
+      ],
+      "search_angles": [
+        "AI in banking regulation and supervision",
+        "Model risk management and AI",
+        "Agentic payments and fraud",
+        "AI in insurance underwriting and claims",
+        "DORA and operational resilience for AI"
+      ]
+    },
+    {
+      "key": "healthcare_life_sciences",
+      "name": "Healthcare & Life Sciences",
+      "scope": "Providers, payers, pharmaceuticals, biotech and medical devices.",
+      "tier2_bodies": [
+        "FDA",
+        "EMA",
+        "NHS England",
+        "WHO",
+        "HL7 (FHIR)"
+      ],
+      "search_angles": [
+        "AI in clinical decision support and EHR",
+        "AI-enabled medical device regulation",
+        "AI in drug discovery and clinical trials",
+        "Healthcare data interoperability and FHIR",
+        "Payer analytics and quality measures"
+      ]
+    },
+    {
+      "key": "manufacturing",
+      "name": "Manufacturing (including hi-tech)",
+      "scope": "Discrete and process manufacturing, semiconductors, electronics and industrial technology.",
+      "tier2_bodies": [
+        "NIST",
+        "International Society of Automation",
+        "World Economic Forum Global Lighthouse Network",
+        "SEMI"
+      ],
+      "search_angles": [
+        "Industrial AI and physical AI",
+        "Digital twins and predictive maintenance",
+        "Supply chain AI and resilience",
+        "Semiconductor supply and AI demand",
+        "Agentic automation in factories"
+      ]
+    },
+    {
+      "key": "energy_utilities",
+      "name": "Energy & Utilities",
+      "scope": "Oil and gas, power generation, networks, water and renewables.",
+      "tier2_bodies": [
+        "International Energy Agency",
+        "Ofgem",
+        "FERC",
+        "ACER",
+        "Eurelectric"
+      ],
+      "search_angles": [
+        "AI for grid management and forecasting",
+        "Data centre electricity demand from AI",
+        "Smart meter and network analytics",
+        "AI in energy trading",
+        "Regulation of AI in critical infrastructure"
+      ]
+    },
+    {
+      "key": "defence_aerospace",
+      "name": "Defence & Aerospace",
+      "scope": "Defence ministries and agencies, prime contractors, aerospace manufacturers.",
+      "tier2_bodies": [
+        "NATO",
+        "European Defence Agency",
+        "UK Ministry of Defence",
+        "US Department of Defense CDAO"
+      ],
+      "search_angles": [
+        "AI strategy and adoption in defence (public policy only)",
+        "Sovereign and secure AI for government and defence",
+        "Aerospace manufacturing and maintenance AI",
+        "Export controls and AI"
+      ]
+    },
+    {
+      "key": "government_public_sector",
+      "name": "Government & Public Sector",
+      "scope": "Central, regional and local government and public services.",
+      "tier2_bodies": [
+        "OECD.AI",
+        "European Commission",
+        "UK DSIT and Government Digital Service",
+        "US OMB"
+      ],
+      "search_angles": [
+        "AI and agents in public services",
+        "Public sector AI procurement rules",
+        "Government data sharing and sovereignty",
+        "AI regulation implementation by governments"
+      ]
+    },
+    {
+      "key": "travel_transportation",
+      "name": "Travel & Transportation (including airlines)",
+      "scope": "Airlines, airports, rail, logistics, travel distribution and hospitality.",
+      "tier2_bodies": [
+        "IATA",
+        "ICAO",
+        "International Transport Forum (OECD)",
+        "UIC"
+      ],
+      "search_angles": [
+        "IATA Modern Airline Retailing, Offers and Orders, ONE Order",
+        "AI in travel planning and booking",
+        "AI in revenue management, pricing and distribution",
+        "Agentic AI and travel distribution",
+        "Logistics and supply chain AI"
+      ]
+    },
+    {
+      "key": "retail_fmcg",
+      "name": "Retail & FMCG",
+      "scope": "Retailers, e-commerce, consumer goods manufacturers and brands.",
+      "tier2_bodies": [
+        "National Retail Federation",
+        "Consumer Goods Forum",
+        "GS1"
+      ],
+      "search_angles": [
+        "Agentic commerce and AI shopping assistants",
+        "AI demand forecasting and pricing",
+        "Retail media and personalisation",
+        "Product data standards for AI agents"
+      ]
+    },
+    {
+      "key": "telecommunications",
+      "name": "Telecommunications",
+      "scope": "Mobile and fixed operators, network equipment and communications services.",
+      "tier2_bodies": [
+        "GSMA",
+        "TM Forum",
+        "ETSI",
+        "Ofcom",
+        "BEREC"
+      ],
+      "search_angles": [
+        "Autonomous networks and AI operations",
+        "AI-RAN and network AI",
+        "Telco sovereign AI and GPU-as-a-service",
+        "AI in customer care and churn"
+      ]
+    }
+  ],
+  "deep_dive_rotation": [
+    "financial_services",
+    "healthcare_life_sciences",
+    "retail_fmcg",
+    "telecommunications",
+    "manufacturing",
+    "energy_utilities",
+    "government_public_sector",
+    "defence_aerospace",
+    "travel_transportation"
+  ]
+}

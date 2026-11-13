@@ -1,5 +1,7 @@
 # Trend Radar briefing - 2026-11-13
 
+> Note added on migration to procedure 2.0: the register was made multi-industry and three baseline scores were re-baselined (AG-05 5 to 4, DM-03 4 to 3, AG-04 4 to 3).  This briefing shows the original version 1 baseline; `snapshot.json` in this folder reflects the re-baselined register.
+
 ## Headline
 
 This is run zero, the baseline.  Thirteen trends are registered across data management, AI/ML and agentic automation, with three watch-list items.  The strongest signals are semantics as core infrastructure, the gap between broad AI adoption and concentrated enterprise value, agents moving from pilots to scale amid a shake-out, and the customer's agent becoming a sales channel for airlines.

@@ -17,7 +17,7 @@
     {
       "id": "W-02",
       "title": "Physical AI and world models",
-      "description": "Gartner expects agents in physical environments to generate far more data than digital applications by 2029. Possible relevance to airline operations and MRO rather than commercial functions.",
+      "description": "Gartner expects agents in physical environments to generate far more data than digital applications by 2029.  Most relevant to manufacturing, energy and utilities, defence and aerospace, and transport operations.",
       "first_seen": "2026-11-13",
       "evidence_ids": [
         "EV-0002"

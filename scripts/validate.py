@@ -35,7 +35,7 @@ W_STATUS = {"watching", "promoted", "dropped"}
 TREND_FIELDS = [
     "trend_id", "status", "category", "title", "definition", "importance",
     "importance_prev", "industry_relevance", "momentum", "confidence",
-    "rationale", "industry_note", "evidence_ids", "counter_evidence_ids",
+    "rationale", "industry_notes", "evidence_ids", "counter_evidence_ids",
     "first_seen", "last_changed", "last_evidence_date", "merged_into", "history",
 ]
 
@@ -75,6 +75,18 @@ def score(value, name, ctx):
         err(f"{ctx}: {name} must be an integer 1-5, got {value!r}")
 
 
+# ---------------------------------------------------------------- industries
+industry_keys = []
+cfg = load_json(ROOT / "config" / "industries.json")
+if cfg:
+    industry_keys = [i.get("key") for i in cfg.get("industries", [])]
+    if len(set(industry_keys)) != len(industry_keys):
+        err("config/industries.json: duplicate industry key")
+    rotation = cfg.get("deep_dive_rotation", [])
+    if sorted(rotation) != sorted(industry_keys):
+        err("config/industries.json: deep_dive_rotation must list every industry key exactly once")
+industry_set = set(industry_keys)
+
 # ---------------------------------------------------------------- run log
 run_log = load_jsonl(STATE / "run_log.jsonl")
 run_ids = [r.get("run_id") for r in run_log]
@@ -85,6 +97,10 @@ if len(set(run_ids)) != len(run_ids):
     err("run_log: duplicate run_id")
 if run_ids != sorted(run_ids):
     err("run_log: run_ids not in ascending order")
+for r in run_log:
+    dd = r.get("deep_dive_industry")
+    if dd is not None and dd not in industry_set:
+        err(f"run_log {r.get('run_id')}: unknown deep_dive_industry {dd!r}")
 latest = run_ids[-1] if run_ids else None
 # Failed runs leave state untouched, so state is checked against the latest successful run.
 ok_runs = [r.get("run_id") for r in run_log if r.get("mode") != "failed"]
@@ -124,7 +140,23 @@ for t in trends:
     if t["status"] not in STATUS:
         err(f"{ctx}: bad status")
     score(t["importance"], "importance", ctx)
-    score(t["industry_relevance"], "industry_relevance", ctx)
+    rel = t["industry_relevance"]
+    if not isinstance(rel, dict):
+        err(f"{ctx}: industry_relevance must be an object keyed by industry")
+    else:
+        if set(rel) != industry_set:
+            err(f"{ctx}: industry_relevance keys must match config/industries.json "
+                f"(missing {sorted(industry_set - set(rel))}, unknown {sorted(set(rel) - industry_set)})")
+        for k, v in rel.items():
+            if v is not None:
+                score(v, f"industry_relevance[{k}]", ctx)
+        if t["status"] == "active" and latest_ok and len(t["history"]) > 1:
+            unassessed = [k for k, v in rel.items() if v is None]
+            if unassessed:
+                warn(f"{ctx}: industries still not assessed: {unassessed}")
+    notes = t["industry_notes"]
+    if not isinstance(notes, dict) or set(notes) - industry_set:
+        err(f"{ctx}: industry_notes must be an object keyed by known industries")
     if t["importance_prev"] is not None:
         score(t["importance_prev"], "importance_prev", ctx)
         if abs(t["importance"] - t["importance_prev"]) > 2:
@@ -208,6 +240,7 @@ for t in trends:
 # ---------------------------------------------------------------- ledger
 ledger = load_jsonl(STATE / "ledger.jsonl")
 ev_ids, urls = set(), {}
+ev_industries = {}
 valid_targets = trend_ids | watch_ids
 for n, e in enumerate(ledger, 1):
     eid = e.get("evidence_id", "?")
@@ -238,6 +271,11 @@ for n, e in enumerate(ledger, 1):
         err(f"{ctx}: summary over 400 characters (paraphrase more tightly)")
     if e.get("quote") and len(e["quote"].split()) >= 15:
         err(f"{ctx}: quote must be under 15 words")
+    inds = e.get("industries", [])
+    if not isinstance(inds, list) or set(inds) - industry_set:
+        err(f"{ctx}: industries must be a list of keys from config/industries.json")
+    else:
+        ev_industries[eid] = inds
     for ref in e.get("supports", []) + e.get("contradicts", []):
         if ref not in valid_targets:
             err(f"{ctx}: references unknown trend or watch item {ref}")
@@ -250,6 +288,13 @@ for t in trends:
     for ref in t.get("evidence_ids", []) + t.get("counter_evidence_ids", []):
         if ref not in ev_ids:
             err(f"register {t['trend_id']}: evidence {ref} not in ledger")
+    rel = t.get("industry_relevance") if isinstance(t.get("industry_relevance"), dict) else {}
+    for k, v in rel.items():
+        if isinstance(v, int) and v >= 4 and t.get("status") == "active":
+            if not any(k in ev_industries.get(e, []) for e in t.get("evidence_ids", [])):
+                err(f"register {t['trend_id']}: industry_relevance[{k}] = {v} needs evidence tagged with {k}")
+            if not (t.get("industry_notes") or {}).get(k):
+                warn(f"register {t['trend_id']}: industry_relevance[{k}] = {v} has no industry note")
 for w in wl.get("items", []):
     for ref in w.get("evidence_ids", []):
         if ref not in ev_ids:

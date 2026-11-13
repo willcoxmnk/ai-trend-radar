@@ -2,7 +2,7 @@
 
 A scheduled research agent that tracks trends in data management, AI/ML and agentic automation over time.  Each run researches the field, compares what it finds with the previous state, rescores existing trends, proposes new ones and writes a time-stamped snapshot and briefing.  The repo is both the agent's memory and its output.
 
-The analytical lens is the airline industry and the airline commercial analyst.  Keep this repo to public-source research: no customer-specific notes and nothing from internal company sources.
+The radar is industry-agnostic at its core: trends and their importance are judged for enterprises in general.  Each trend is then scored for relevance to each industry listed in `config/industries.json`.  Interpretation for a particular customer is produced on demand from the register, not stored here.  Keep this repo to public-source research: no customer-specific notes and nothing from internal company sources.
 
 ## How it runs
 
@@ -20,6 +20,7 @@ config/
   rubric.md               Scoring rubric (versioned)
   sources.md              Source tiers, search angles and publication calendar
   scope.md                Domains, lens and what is in or out of scope
+  industries.json         Industries tracked, their search angles, and the deep-dive rotation
 state/
   register.json           Canonical trend register (current state)
   ledger.jsonl            Append-only evidence ledger, one JSON object per line
@@ -90,11 +91,11 @@ Review routine: after each run, read the briefing, record any decisions, and com
       "definition": "One or two sentences that pin down the scope",
       "importance": 5,
       "importance_prev": null,
-      "industry_relevance": 5,
+      "industry_relevance": {"financial_services": 3, "travel_transportation": 5, "...": null},
       "momentum": "baseline",
       "confidence": "high",
       "rationale": "Why the current scores, referencing evidence",
-      "industry_note": "Why it matters to airline commercial teams",
+      "industry_notes": {"travel_transportation": "Why it matters to that industry"},
       "evidence_ids": ["EV-0018"],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
@@ -113,7 +114,8 @@ Review routine: after each run, read the briefing, record any decisions, and com
 - `status` is `active`, `merged`, `split` or `retired`.  Inactive trends stay in the file for history.
 - `merged_into` (for merged trends) and `split_into` (for split trends) point to successors.  `origin` is null for run-zero trends, otherwise `{"type": "promoted" | "proposal" | "split", "from": "<ID>"}`.  `split_into` and `origin` may be omitted where empty.
 - Each `history` entry records one run.  The optional `event` text explains structural changes, so that a jump in a trend's importance after a merge can be traced.
-- `importance` and `industry_relevance` are integers from 1 to 5, defined in `config/rubric.md`.
+- `importance` is an integer from 1 to 5 for enterprises in general.
+- `industry_relevance` holds one score per industry key in `config/industries.json`: an integer from 1 to 5, or null if not yet assessed.  Scores of 4 or 5 need ledger evidence tagged with that industry.  `industry_notes` explains, per industry, why a trend matters; it is expected for any score of 4 or 5.
 - `momentum` is `baseline`, `rising`, `stable` or `fading`.
 - `confidence` is `high`, `medium` or `low`.
 
@@ -122,11 +124,12 @@ Review routine: after each run, read the briefing, record any decisions, and com
 One object per line, append-only.  Entries are never edited except to add a `notes` correction.
 
 ```json
-{"evidence_id": "EV-0001", "url": "https://...", "publisher": "Gartner", "title": "...", "tier": 1, "published_date": "2026-06-16", "retrieved_date": "2026-11-13", "summary": "Paraphrased summary, max 400 characters", "supports": ["DM-01"], "contradicts": [], "secondary": false, "notes": ""}
+{"evidence_id": "EV-0001", "url": "https://...", "publisher": "Gartner", "title": "...", "tier": 1, "published_date": "2026-06-16", "retrieved_date": "2026-11-13", "summary": "Paraphrased summary, max 400 characters", "supports": ["DM-01"], "contradicts": [], "industries": [], "secondary": false, "notes": ""}
 ```
 
 - `tier` is 1 to 4, defined in `config/sources.md`.
 - `published_date` is the date of the underlying publication (`YYYY-MM-DD` or `YYYY-MM`, or null if unknown).  `retrieved_date` is the run date.  The difference matters: an old report found for the first time is not new news.
+- `industries` lists the industry keys the evidence is specific to; it is empty for general evidence.
 - `secondary` is true when the entry reports someone else's findings, for example press coverage of the Stanford AI Index.
 - Summaries are paraphrased.  No article text is stored.  An optional `quote` field may hold one quote of fewer than 15 words.
 
@@ -142,6 +145,8 @@ python3 scripts/make_snapshot.py --run-id 2026-11-13 --mode baseline
 ```
 
 ## Run history
+
+Procedure version 2.0 made the radar multi-industry: importance is explicitly industry-agnostic, industry relevance is scored per industry, each run includes a light pass on every industry and a deep dive on one in rotation, and the briefing reports by industry.  On migration, three baseline scores that did not meet the rubric were re-baselined (AG-05, DM-03 and AG-04, each recorded as a history event), and travel relevance scores without travel-specific evidence were reset to 3.
 
 Procedure version 1.1 added rules for splits, duplicate, rejected and stale proposals, history events and direct-edit reporting.
 

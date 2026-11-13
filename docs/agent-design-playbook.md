@@ -39,13 +39,17 @@ The agent may update evidence, scores and the watch list.  It may only propose s
 
 Two small scripts handle the deterministic work: a validator that checks integrity before anything is pushed, and a snapshot script that computes the diff between runs.  The briefing is written from that diff, not from the model's recollection.  The language model is reserved for judgement: finding, reading, classifying and explaining.
 
-### 7. Keep the logic in the repository
+### 7. Keep the core general and treat industries as configuration
+
+The first version was framed around one customer's industry, which leaked into the scope, the search plan, the scores and the briefing.  It also inflated one trend's importance, because strong airline evidence was read as general significance.  Version 2.0 separated the two layers: importance is judged for enterprises in general, and relevance is scored per industry from a configuration file.  Customer-specific interpretation is produced on demand from the register, which also keeps customer material out of the repo.  The lesson is to decide early who the output is for, and to keep anything audience-specific in configuration rather than in the procedure.
+
+### 8. Keep the logic in the repository
 
 The scheduled task prompt is deliberately short and points at `CLAUDE.md`, which holds the full procedure.  Changes to behaviour are therefore versioned commits, not edits hidden in task settings.
 
-### 8. Plan for failure
+### 9. Plan for failure
 
-The procedure covers repeat runs on the same day (stop), search failures (record the failure, leave state untouched) and validation failures (never push invalid state to `main`).
+The procedure covers repeat runs on the same day (stop), search failures and page-access failures (record a failed run and leave state untouched, so that missing evidence is never mistaken for a fading trend) and validation failures (never push invalid state to `main`).  The validator was extended to accept failed runs, having initially blocked them.
 
 ## Deployment lessons
 
@@ -55,6 +59,10 @@ These are the practical issues encountered during setup:
 - **Connected is not installed.**  Linking GitHub to Claude is not enough.  The Claude GitHub App must appear under GitHub Settings > Applications > Installed GitHub Apps, with the repo selected, or pushes will fail.
 - **Branch restrictions affect memory.**  By default a scheduled task can only push to `claude/` branches.  The next run clones `main`, so unmerged output is invisible to it.  Enable "Allow unrestricted branch pushes" for a dedicated state repo.
 - **Account choice.**  Use the personal Claude account consistently for personal-repo agents, and keep account-specific or internal material out of personal repos.
+- **Network access.**  Search worked in the default cloud environment, but the agent could not open publisher pages.  Set the environment's network access to full, and test by asking an interactive session to fetch a known page.
+- **Summarised fetching.**  Page fetches return summaries, not raw text, so specific figures and dates should be confirmed with a narrow follow-up question.
+- **Run IDs.**  A manual baseline dated today blocks a real run until tomorrow.  Date the baseline the day before, or expect to wait.
+- **Interface drift.**  The product interface changed faster than its documentation (scheduled tasks became Routines).  When a setting cannot be found, test the underlying capability with an interactive session before assuming the setup is wrong.
 - **Scheduling.**  Monthly is not a preset; choose the nearest option and adjust with `/schedule update`.  Always test with "Run now" first.
 
 ## Handling structural changes
@@ -105,4 +113,6 @@ The first version of the procedure left several gaps.  These were closed before 
 7. Put validation and diffing in code.
 8. Keep the procedure in the repo and the task prompt short.
 9. Define failure behaviour and make runs idempotent.
-10. Check repo root, app installation, branch permissions and account before the first scheduled run.
+10. Check repo root, app installation, branch permissions, network access and account before the first scheduled run.
+11. Keep the core audience-neutral, with industry or customer lenses in configuration.
+12. Make failed runs explicit, so that missing evidence is never read as a real signal.

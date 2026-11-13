@@ -49,11 +49,18 @@ def diff(prev, reg, watch, ledger):
         if b["status"] != t["status"]:
             out["trends_status_changed"].append({"id": tid, "from": b["status"], "to": t["status"]})
         for key, bucket in (("importance", "importance_changed"),
-                            ("industry_relevance", "relevance_changed"),
                             ("momentum", "momentum_changed"),
                             ("confidence", "confidence_changed")):
             if b[key] != t[key]:
                 out[bucket].append({"id": tid, "from": b[key], "to": t[key]})
+        before_rel = b.get("industry_relevance")
+        after_rel = t.get("industry_relevance") or {}
+        if not isinstance(before_rel, dict):
+            before_rel = {}  # pre-2.0 snapshots held a single airline score
+        for ind, val in after_rel.items():
+            if before_rel.get(ind) != val:
+                out["relevance_changed"].append(
+                    {"id": tid, "industry": ind, "from": before_rel.get(ind), "to": val})
     wb = {w["id"]: w for w in prev["watchlist"]["items"]}
     for w in watch["items"]:
         if w["id"] not in wb:
