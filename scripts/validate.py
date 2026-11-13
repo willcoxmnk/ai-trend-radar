@@ -86,6 +86,9 @@ if len(set(run_ids)) != len(run_ids):
 if run_ids != sorted(run_ids):
     err("run_log: run_ids not in ascending order")
 latest = run_ids[-1] if run_ids else None
+# Failed runs leave state untouched, so state is checked against the latest successful run.
+ok_runs = [r.get("run_id") for r in run_log if r.get("mode") != "failed"]
+latest_ok = ok_runs[-1] if ok_runs else None
 
 # ---------------------------------------------------------------- watch list
 wl = load_json(STATE / "watchlist.json") or {"items": []}
@@ -163,8 +166,11 @@ for t in trends:
                 err(f"{ctx}: history run_id {h.get('run_id')!r} not in run_log")
             if "event" in h and not isinstance(h["event"], str):
                 err(f"{ctx}: history event must be text")
-        if t["status"] == "active" and latest and t["history"][-1].get("run_id") != latest:
-            err(f"{ctx}: no history entry for latest run {latest}")
+        if t["status"] == "active" and latest_ok and t["history"][-1].get("run_id") != latest_ok:
+            err(f"{ctx}: no history entry for latest successful run {latest_ok}")
+        failed = set(run_ids) - set(ok_runs)
+        if any(h.get("run_id") in failed for h in t["history"]):
+            err(f"{ctx}: history contains a failed run (failed runs must not change state)")
         if t["history"][-1].get("importance") != t["importance"]:
             err(f"{ctx}: latest history importance differs from current importance")
     if t["momentum"] == "baseline" and len(t["history"]) > 1:
@@ -329,19 +335,25 @@ if decisions_path.exists():
             warn(f"decisions: {pid} not yet applied but proposal Outcome is {outcome!r}")
 
 # ---------------------------------------------------------------- run outputs
-if latest:
-    run_dir = ROOT / "runs" / latest
-    mode = run_log[-1].get("mode")
+if latest and run_log[-1].get("mode") == "failed":
+    if not (ROOT / "runs" / latest / "briefing.md").exists():
+        err(f"runs/{latest}/briefing.md missing (a failed run must explain the failure)")
+    if (ROOT / "runs" / latest / "snapshot.json").exists():
+        err(f"runs/{latest}/snapshot.json exists but the run is logged as failed")
+    warn(f"latest run {latest} is logged as failed; state reflects {latest_ok}")
+if latest_ok:
+    run_dir = ROOT / "runs" / latest_ok
+    mode = next(r.get("mode") for r in run_log if r.get("run_id") == latest_ok)
     for f in ("snapshot.json", "briefing.md"):
         if not (run_dir / f).exists():
-            err(f"runs/{latest}/{f} missing")
+            err(f"runs/{latest_ok}/{f} missing")
     if mode == "scheduled" and not (run_dir / "blind_scan.md").exists():
-        err(f"runs/{latest}/blind_scan.md missing for a scheduled run")
+        err(f"runs/{latest_ok}/blind_scan.md missing for a scheduled run")
     snap_path = run_dir / "snapshot.json"
     if snap_path.exists():
         snap = load_json(snap_path)
         if snap and snap.get("register") != reg:
-            warn(f"runs/{latest}/snapshot.json register differs from state/register.json "
+            warn(f"runs/{latest_ok}/snapshot.json register differs from state/register.json "
                  "(re-run make_snapshot.py after final edits)")
 
 # ---------------------------------------------------------------- report
