@@ -1,0 +1,40 @@
+{
+  "updated": "2026-11-13",
+  "items": [
+    {
+      "id": "W-01",
+      "title": "Entry-level analytical work exposed; AI proficiency becomes a hiring criterion",
+      "description": "Evidence that junior, data-gathering analyst roles are contracting and that employers will test AI proficiency. Candidate input to a future workforce or skills trend.",
+      "first_seen": "2026-11-13",
+      "evidence_ids": [
+        "EV-0002",
+        "EV-0007",
+        "EV-0023"
+      ],
+      "runs_seen": 1,
+      "status": "watching"
+    },
+    {
+      "id": "W-02",
+      "title": "Physical AI and world models",
+      "description": "Gartner expects agents in physical environments to generate far more data than digital applications by 2029. Possible relevance to airline operations and MRO rather than commercial functions.",
+      "first_seen": "2026-11-13",
+      "evidence_ids": [
+        "EV-0002"
+      ],
+      "runs_seen": 1,
+      "status": "watching"
+    },
+    {
+      "id": "W-03",
+      "title": "Coding agents shift build-versus-buy decisions",
+      "description": "Organisations report building software with coding agents instead of buying it, which could change how commercial teams source analytical tools.",
+      "first_seen": "2026-11-13",
+      "evidence_ids": [
+        "EV-0012"
+      ],
+      "runs_seen": 1,
+      "status": "watching"
+    }
+  ]
+}

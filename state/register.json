@@ -1,0 +1,405 @@
+{
+  "rubric_version": "1.0",
+  "updated": "2026-11-13",
+  "trends": [
+    {
+      "trend_id": "DM-01",
+      "status": "active",
+      "category": "data_management",
+      "title": "Semantics becomes core infrastructure",
+      "definition": "Shared, machine-readable business meaning (semantic layers, knowledge graphs, GraphRAG) becomes a prerequisite for trustworthy AI and agents, with open interchange standards emerging.",
+      "importance": 5,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "Gartner names semantics one of three forces shaping D&A and predicts universal semantic layers become critical infrastructure by 2030 (EV-0001, EV-0002). Open Semantic Interchange spec released and moved to the Apache Incubator as Apache Ossie (EV-0003, EV-0004). Signals S1, S2, S3.",
+      "industry_note": "Multi-carrier groups need single definitions of yield, RASK and load factor before agents can answer commercial questions consistently.",
+      "evidence_ids": [
+        "EV-0001",
+        "EV-0002",
+        "EV-0003",
+        "EV-0004"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 5,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "DM-02",
+      "status": "active",
+      "category": "data_management",
+      "title": "Platforms converge on open table formats; competition shifts to catalogues and governance",
+      "definition": "Data and analytics platforms consolidate on open storage formats, chiefly Apache Iceberg, with differentiation moving to catalogues, table maintenance and access control for agents.",
+      "importance": 3,
+      "importance_prev": null,
+      "industry_relevance": 3,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Gartner lists platform convergence as a driving force (EV-0001). Iceberg adoption treated as settled by practitioners (EV-0005), but survey data suggests warehouses remain the primary paradigm for most teams (EV-0006). Mostly tier 4 evidence beyond Gartner.",
+      "industry_note": "Relevant to commercial data estates through cost and flexibility; no airline-specific evidence yet.",
+      "evidence_ids": [
+        "EV-0001",
+        "EV-0004",
+        "EV-0005",
+        "EV-0006"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 3,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "DM-03",
+      "status": "active",
+      "category": "data_management",
+      "title": "Real-time, event-driven data becomes a prerequisite for agents",
+      "definition": "Batch data delivery gives way to continuous streaming so that agents can act on current state.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 5,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Gartner forecasts data streaming for agentic AI to rise from under 15% in 2025 to over 60% by 2028 (EV-0001). Single primary source so far.",
+      "industry_note": "Continuous pricing, disruption handling and in-journey offers all depend on current inventory and demand signals.",
+      "evidence_ids": [
+        "EV-0001"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-06-16",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "DM-04",
+      "status": "active",
+      "category": "data_management",
+      "title": "Agents start managing the data estate",
+      "definition": "AI agents take on data quality, lineage, governance and policy enforcement, including translating policy into machine-verifiable data contracts.",
+      "importance": 3,
+      "importance_prev": null,
+      "industry_relevance": 3,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Gartner trend and prediction on agentic data management and automated data contracts (EV-0001, EV-0002). Forecast-led, little deployment evidence yet.",
+      "industry_note": "Indirect: frees commercial data teams from stewardship work and improves data readiness for AI.",
+      "evidence_ids": [
+        "EV-0001",
+        "EV-0002"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-06-16",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 3,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AI-01",
+      "status": "active",
+      "category": "ai_ml",
+      "title": "Capability keeps compounding",
+      "definition": "Frontier model capability continues to improve across reasoning, science, maths and computer use, with the US-China gap narrowing.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 3,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Stanford AI Index 2026 as reported: human-level or better on PhD science and competition maths, OSWorld success from about 12% to about 66%, US-China gap 2.7 points (EV-0007, EV-0008). Confidence held at medium because figures come from secondary reporting.",
+      "industry_note": "Sets the ceiling for what commercial analytics and agents can do; relevance is general rather than airline-specific.",
+      "evidence_ids": [
+        "EV-0007",
+        "EV-0008"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-04-13",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AI-02",
+      "status": "active",
+      "category": "ai_ml",
+      "title": "The unit price of intelligence collapses while total AI bills rise",
+      "definition": "Cost per unit of capability falls by an order of magnitude or more each year, but agentic workloads consume far more compute, so total spend and cost constraints increase.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 3,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "Epoch AI and an arXiv study document steep price declines at fixed capability alongside rising frontier running costs (EV-0010, EV-0011). McKinsey finds about 20% of organisations constrained by AI operating costs (EV-0012). Signals S1, S2.",
+      "industry_note": "Changes the economics of high-volume use cases such as offer personalisation and scenario simulation.",
+      "evidence_ids": [
+        "EV-0010",
+        "EV-0011",
+        "EV-0012"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AI-03",
+      "status": "active",
+      "category": "ai_ml",
+      "title": "Broad adoption, concentrated value",
+      "definition": "AI use is near-universal and individuals report productivity gains, but enterprise-level financial impact remains rare and flat.",
+      "importance": 5,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "McKinsey: 80% report personal productivity gains, 37% any EBIT impact (flat), about 6% high performers (EV-0012). Stanford coverage reports 14-26% productivity gains in some functions (EV-0007). Signals S1, S2.",
+      "industry_note": "The core management question for commercial functions: converting analyst productivity into revenue and margin.",
+      "evidence_ids": [
+        "EV-0007",
+        "EV-0012"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 5,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AI-04",
+      "status": "active",
+      "category": "ai_ml",
+      "title": "Sovereignty, transparency and regulation become strategic variables",
+      "definition": "Geopolitics, falling model transparency and evolving regulation (notably the EU AI Act) shape model choice, data residency and vendor strategy.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Gartner ranks sovereign AI first among 2026 D&A trends (EV-0001). Transparency index reportedly fell from 58 to 40 (EV-0009, low-tier secondary). EU AI Act high-risk obligations delayed to December 2027 and August 2028 (EV-0022).",
+      "industry_note": "European carriers face residency, vendor-concentration and compliance choices for AI used in pricing and customer interactions.",
+      "evidence_ids": [
+        "EV-0001",
+        "EV-0009",
+        "EV-0022"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-06-16",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AG-01",
+      "status": "active",
+      "category": "agentic",
+      "title": "The horizon of autonomous work lengthens fast",
+      "definition": "The length and complexity of tasks agents can complete without human help is growing exponentially.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 3,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "METR finds a roughly 7-month doubling over six years (EV-0014), with its 2026 update implying about 3.5-4 months for recent models (EV-0015, secondary). OSWorld gains support the direction (EV-0007). Benchmarks are software-heavy and set at 50% reliability.",
+      "industry_note": "Indicates how quickly multi-step analytical work (for example building and testing a pricing scenario) becomes delegable.",
+      "evidence_ids": [
+        "EV-0007",
+        "EV-0014",
+        "EV-0015"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-04-13",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AG-02",
+      "status": "active",
+      "category": "agentic",
+      "title": "From pilots to scale, with a shake-out",
+      "definition": "Large enterprises are moving agents into production while many projects are cancelled and agent washing inflates the market.",
+      "importance": 5,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "McKinsey: 40% of large firms scaling agents, up from 27% (EV-0012). Gartner: over 40% of agentic projects cancelled by end-2027, only about 130 genuine vendors, yet 15% of daily decisions autonomous by 2028 (EV-0013). Signals S1, S2, S5.",
+      "industry_note": "Argues for selecting agentic use cases by clear value and avoiding vendor claims that are rebadged automation.",
+      "evidence_ids": [
+        "EV-0012",
+        "EV-0013"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 5,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AG-03",
+      "status": "active",
+      "category": "agentic",
+      "title": "Open protocols become the plumbing",
+      "definition": "Agent connectivity standards (Model Context Protocol, Agent2Agent, agent payments) consolidate under neutral open-source governance.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "Agentic AI Foundation launched under the Linux Foundation with MCP, goose and AGENTS.md (EV-0016); A2A joined in August 2026 with over 150 partners (EV-0017); membership reported to exceed 250 (EV-0018). Signal S3.",
+      "industry_note": "Lowers integration cost for airline systems and makes it easier for third-party agents to transact with airlines.",
+      "evidence_ids": [
+        "EV-0016",
+        "EV-0017",
+        "EV-0018"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-08-17",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AG-04",
+      "status": "active",
+      "category": "agentic",
+      "title": "Governing decisions, not just data",
+      "definition": "As agents act, governance shifts to modelling, auditing and evaluating decisions at runtime.",
+      "importance": 4,
+      "importance_prev": null,
+      "industry_relevance": 4,
+      "momentum": "baseline",
+      "confidence": "medium",
+      "rationale": "Gartner decision governance trend and forecast that modelled decisions will be five times more trusted by 2029 (EV-0001); predicts half of agent failures by 2030 will stem from weak runtime governance and calls for an evaluation stage in analytic workflows (EV-0002). Gartner-only so far.",
+      "industry_note": "Pricing and offer decisions made or recommended by agents need explicit models, guardrails and audit trails.",
+      "evidence_ids": [
+        "EV-0001",
+        "EV-0002"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-06-16",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 4,
+          "momentum": "baseline"
+        }
+      ]
+    },
+    {
+      "trend_id": "AG-05",
+      "status": "active",
+      "category": "agentic",
+      "title": "The customer's agent becomes a sales channel",
+      "definition": "Travellers and buyers delegate search, comparison and booking to third-party AI agents, making machine-readable offers and agent protocols part of distribution strategy.",
+      "importance": 5,
+      "importance_prev": null,
+      "industry_relevance": 5,
+      "momentum": "baseline",
+      "confidence": "high",
+      "rationale": "IATA: 49% of passengers have used AI for travel planning, Europe lowest at 35% (EV-0020, secondary); IATA urges airlines to retain control of data and customer relationships as agents reshape discovery (EV-0019); ONE Order positioned as foundation for agentic distribution (EV-0021); AP2 extends A2A to payments (EV-0017). Signals S3, S4.",
+      "industry_note": "Directly affects distribution control, offer representation and the Offers and Orders roadmap.",
+      "evidence_ids": [
+        "EV-0017",
+        "EV-0019",
+        "EV-0020",
+        "EV-0021"
+      ],
+      "counter_evidence_ids": [],
+      "first_seen": "2026-11-13",
+      "last_changed": "2026-11-13",
+      "last_evidence_date": "2026-10-28",
+      "merged_into": null,
+      "history": [
+        {
+          "run_id": "2026-11-13",
+          "importance": 5,
+          "momentum": "baseline"
+        }
+      ]
+    }
+  ]
+}
