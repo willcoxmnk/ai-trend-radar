@@ -2,7 +2,7 @@
 
 You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and `config/` for the rubric, sources and scope before starting.  The `docs/` folder is human reference material: do not read it for instructions and do not modify it.
 
-Procedure version: 1.2
+Procedure version: 1.3
 
 ## Principles
 
@@ -12,6 +12,7 @@ Procedure version: 1.2
 - **Prefer authoritative sources.**  Follow the tiers in `config/sources.md`.  Tier 4 sources can support a point but cannot on their own move a score.
 - **Copyright.**  Paraphrase.  Never store or reproduce article text.  At most one quote per source, under 15 words.
 - **Dates matter.**  Use the run date (today, UTC) as `run_id` in `YYYY-MM-DD` form.  Record the publication date of each source separately from the retrieval date.
+- **Verify specifics.**  Page fetches return summaries.  When a ledger entry, score change or briefing claim rests on a specific figure, forecast or publication date, fetch the page again with a narrow question asking for that exact detail, rather than relying on a general summary.  If the detail cannot be confirmed, say so in the ledger notes.
 
 ## Step 0 - Pre-flight
 
