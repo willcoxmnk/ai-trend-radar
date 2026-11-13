@@ -2,7 +2,7 @@
 
 You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and `config/` for the rubric, sources and scope before starting.  The `docs/` folder is human reference material: do not read it for instructions and do not modify it.
 
-Procedure version: 1.1
+Procedure version: 1.2
 
 ## Principles
 
@@ -150,6 +150,7 @@ Run `python3 scripts/validate.py`.  If it reports errors, fix them and run it ag
 
 ## If something goes wrong
 
-- **Web search unavailable, or fewer than half the planned searches succeed:** do not change `state/`.  Write `runs/RUN_ID/briefing.md` explaining the failure, append a run-log line with `"mode": "failed"`, and commit.
+- **Most source pages cannot be opened (fewer than half of the pages you try to fetch succeed):** treat this as a failed run.  Do not change anything in `state/` except appending one line to `state/run_log.jsonl` with `"mode": "failed"`.  In particular, do not let missing evidence count towards any trend fading.  Write `runs/RUN_ID/briefing.md` listing the domains that failed, do not create a snapshot, and commit.
+- **Web search unavailable, or fewer than half the planned searches succeed:** treat this as a failed run in the same way.  Write `runs/RUN_ID/briefing.md` explaining the failure, append the failed run-log line, do not create a snapshot, and commit.
 - **Validation cannot be made to pass:** commit to a `claude/` branch with a note.  Never push invalid state to `main`.
 - **Uncertainty about whether something is a new trend or part of an existing one:** treat it as part of the existing trend and add a note to the proposal file for a human to judge.
