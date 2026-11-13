@@ -1,8 +1,8 @@
 # Trend Radar - run procedure
 
-You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and `config/` for the rubric, sources and scope before starting.
+You are the research agent for this repository.  On every run, follow this procedure in order.  Read `README.md` for the data model and `config/` for the rubric, sources and scope before starting.  The `docs/` folder is human reference material: do not read it for instructions and do not modify it.
 
-Procedure version: 1.0
+Procedure version: 1.1
 
 ## Principles
 
@@ -18,11 +18,11 @@ Procedure version: 1.0
 1. Set `RUN_ID` to today's date in UTC.
 2. Read `state/run_log.jsonl`.  If `RUN_ID` already exists, stop: this run has already happened.  Do not modify anything.
 3. Note `PREV_RUN` (the latest entry) and its date.  Set the lookback window from `PREV_RUN` minus 14 days to today.  The overlap catches late-indexed items.
-4. Read `proposals/decisions.md`.  Apply any decisions not yet applied (see Step 4).  Mark each as applied by adding `(applied RUN_ID)` to its line.
+4. Do not read `proposals/` yet.  Decisions are applied at the start of Step 2, after the blind scan, so that they do not shape your fresh view of the field.
 
 ## Step 1 - Blind scan (Phase A)
 
-Do not open `state/register.json`, `state/watchlist.json` or any file under `runs/` during this step.  The purpose is to see the field fresh, without anchoring on last run's conclusions.
+Do not open `state/register.json`, `state/watchlist.json`, `proposals/` or any file under `runs/` during this step.  The purpose is to see the field fresh, without anchoring on last run's conclusions.
 
 1. Research each of the three domains in `config/scope.md` using the search angles in `config/sources.md`.  Run at least 6 searches per domain plus at least 4 on the airline industry lens.  Fetch and read the important pages rather than relying on snippets.
 2. Prioritise material published within the lookback window.  Also capture any major publication on the calendar in `config/sources.md` that has appeared since `PREV_RUN`.
@@ -34,7 +34,9 @@ Do not open `state/register.json`, `state/watchlist.json` or any file under `run
 
 ## Step 2 - Reconcile (Phase B)
 
-1. Now read `state/register.json`, `state/watchlist.json`, `state/ledger.jsonl` and the latest `runs/*/briefing.md`.
+1. Now read `state/register.json`, `state/watchlist.json`, `state/ledger.jsonl`, the latest `runs/*/snapshot.json` and `runs/*/briefing.md`, and both files in `proposals/`.
+   - First, detect direct human edits as described in Step 4b.
+   - Then apply outstanding decisions as described in Step 4a, so that reconciliation and scoring work on the updated register.
 2. For each source in the blind scan, check the ledger for the same URL (ignore query strings, fragments and trailing slashes).  Skip duplicates.  Append each genuinely new source to `state/ledger.jsonl` with the next `EV-` number, tagging `supports` and `contradicts` with trend or watch-list IDs.
 3. Map each blind-scan candidate to an existing trend ID where the substance matches, even if your wording differs.  Record the mapping in a "Reconciliation" section at the end of `blind_scan.md`.
 4. For candidates that do not map:
@@ -49,24 +51,47 @@ Apply `config/rubric.md` to every active trend.
 1. Set `importance_prev` to the current `importance` before changing anything.
 2. Change `importance`, `industry_relevance`, `momentum` or `confidence` only where the rubric allows, citing the new evidence IDs in `rationale`.
 3. Respect the hysteresis rules in the rubric.
-4. Append an entry to each active trend's `history`, even if nothing changed.
+4. Append an entry to each active trend's `history`, even if nothing changed.  If Step 4a already added an entry for this run (for example with a merge `event`), update that entry rather than adding a second one.  History entries take the form `{"run_id": ..., "importance": ..., "momentum": ..., "event": optional text}`.
 5. Update `last_changed` only for trends whose scores changed, and `last_evidence_date` where new evidence arrived.
 6. Increment `runs_seen` on watch-list items with new evidence.  Set items to `dropped` if they have had no new evidence for 3 consecutive runs.
 
 ## Step 4 - Proposals and decisions
 
-You may not add, merge, split or retire trends in the register yourself.  Instead:
+You may not add, merge, split or retire trends in the register yourself.  You propose; a human decides.  All proposals live in `proposals/pending.md` and follow the template there exactly, because `scripts/validate.py` parses them.
 
-1. Append proposals to `proposals/pending.md` using the template in that file.  Give each a unique ID `P-RUN_ID-NN`.  Typical triggers:
-   - A watch-list item meets the promotion threshold in the rubric.
-   - Two trends have converged in substance.
-   - A trend meets the retirement threshold in the rubric.
-2. When applying decisions from `proposals/decisions.md`:
-   - `APPROVE` for a new trend: create it with the next free ID in its category, momentum `baseline`, and set the watch-list item to `promoted`.
-   - `APPROVE` for a merge: set the absorbed trend's `status` to `merged` and `merged_into` to the surviving ID, and move its evidence IDs across.
-   - `APPROVE` for a retirement: set `status` to `retired`.
-   - `REJECT`: leave the register unchanged and note the reason in the proposal.
-3. Human edits to `state/register.json` made between runs are authoritative.  Do not reverse them.
+### 4a - Apply decisions (performed at the start of Step 2)
+
+Read `proposals/decisions.md`.  For each decision line without `(applied ...)`:
+
+- **`APPROVE` an add:** create the trend with the next free ID in its domain (IDs are never reused), momentum `baseline`, `origin` set to `{"type": "promoted", "from": "W-NN"}` or `{"type": "proposal", "from": "P-..."}`.  Set the source watch-list item to `promoted`.
+- **`APPROVE` a merge:** set the absorbed trend's `status` to `merged` and `merged_into` to the surviving ID.  Copy all of the absorbed trend's `evidence_ids` and `counter_evidence_ids` into the survivor (the absorbed trend keeps its own lists for history).  Add a history entry to both trends for this run with an `event`, for example `"absorbed AG-03"` and `"merged into AG-02"`.  Rescore the survivor in Step 3 as normal; keep its momentum unless the rubric says otherwise.
+- **`APPROVE` a split:** set the original trend's `status` to `split` and `split_into` to the list of successor IDs (at least two).  Each successor is either an existing trend or a new one created with the next free ID, `origin` `{"type": "split", "from": "<original ID>"}` and momentum `baseline`.  Allocate every evidence ID of the original to at least one successor, and show the allocation in the briefing.  Add history entries with an `event` to the original and each successor.
+- **`APPROVE` a retirement:** set `status` to `retired` and add a history entry with an `event`, for example `"retired"`.
+- **`APPROVE ... with title: <text>`:** apply as above using the revised title.
+- **`REJECT`:** change nothing in the register.
+
+Then update the proposal's `Outcome` line (`applied RUN_ID`, or `rejected RUN_ID - <reason>`) and append `(applied RUN_ID)` to the decision line.
+
+### 4b - Detect direct edits (performed at the start of Step 2, before 4a)
+
+The decisions file is the normal route for structural change.  Direct edits to `state/register.json` between runs are for corrections only, but they are authoritative: never reverse them.  Compare the register with the previous snapshot before you change anything.  If a trend's status, title, definition or scores differ from the snapshot without a corresponding decision, record each difference under "Human edits since last run" in the briefing.
+
+### 4c - Raise and maintain proposals (after Step 3)
+
+1. **One live proposal per change.**  Before writing a proposal, check `pending.md` for a `pending` proposal of the same type affecting the same IDs.  If one exists, do not create another: add the new evidence IDs to it, update `Last updated`, and increment `Runs pending`.
+2. **Respect rejections.**  If a matching proposal was rejected, re-propose only when at least one new tier 1-2 source has appeared since the rejection.  The new proposal must reference the rejected one in `Supersedes` and explain what has changed.
+3. **Increment `Runs pending`** on every proposal still `pending` at the end of this run.
+4. **Withdraw** a pending proposal if the evidence no longer supports it: set `Outcome` to `withdrawn RUN_ID - <reason>`.
+5. **New proposal IDs** are `P-RUN_ID-NN`, numbered from 01 within the run.
+6. Typical triggers, using the thresholds in `config/rubric.md`:
+   - A watch-list item meets the promotion threshold.
+   - Two trends have converged in substance (merge).
+   - One trend has grown to cover two distinct shifts with different evidence (split).
+   - A trend meets the retirement threshold.
+
+### 4d - Flag stale proposals
+
+Any proposal with `Runs pending` of 3 or more is stale.  List stale proposals first under "Proposals awaiting decision" in the briefing, marked **STALE**, so that they are not overlooked.
 
 ## Step 5 - Write outputs
 
@@ -74,7 +99,7 @@ You may not add, merge, split or retire trends in the register yourself.  Instea
 2. Run `python3 scripts/make_snapshot.py --run-id RUN_ID --mode scheduled`.  This writes `runs/RUN_ID/snapshot.json` and prints the diff against `PREV_RUN`.  Use that diff, not your memory, as the basis for the briefing.
 3. Write `runs/RUN_ID/briefing.md` using the structure below.
 4. Append one line to `state/run_log.jsonl`:
-   `{"run_id": "RUN_ID", "mode": "scheduled", "procedure_version": "1.0", "rubric_version": "...", "searches": N, "new_evidence": N, "summary": "one sentence"}`
+   `{"run_id": "RUN_ID", "mode": "scheduled", "procedure_version": "1.1", "rubric_version": "...", "searches": N, "new_evidence": N, "summary": "one sentence"}`
 
 ### Briefing structure
 
@@ -91,7 +116,13 @@ Trends whose importance or momentum changed, each with the evidence that moved i
 Items added or strengthened, with evidence.
 
 ## Proposals awaiting decision
-Short list pointing to proposals/pending.md.
+Stale proposals first (marked STALE), then others, each with ID, type, affected trends and runs pending.
+
+## Decisions applied this run
+What was approved, rejected or withdrawn, and the effect on the register.
+
+## Human edits since last run
+Direct register changes detected in Step 4b, or "None".
 
 ## What it means for the airline commercial analyst
 A short paragraph, grounded in this run's evidence.

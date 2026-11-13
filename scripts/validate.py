@@ -24,7 +24,13 @@ W_ID = re.compile(r"^W-\d{2}$")
 CATEGORY = {"DM": "data_management", "AI": "ai_ml", "AG": "agentic"}
 MOMENTUM = {"baseline", "rising", "stable", "fading"}
 CONFIDENCE = {"high", "medium", "low"}
-STATUS = {"active", "merged", "retired"}
+STATUS = {"active", "merged", "split", "retired"}
+ORIGIN_TYPES = {"promoted", "proposal", "split"}
+P_ID = re.compile(r"^P-\d{4}-\d{2}-\d{2}-\d{2}$")
+P_TYPES = {"add", "merge", "split", "retire"}
+OUTCOME = re.compile(r"^(pending|applied \d{4}-\d{2}-\d{2}|(rejected|withdrawn) \d{4}-\d{2}-\d{2} - .+)$")
+P_FIELDS = ["Type", "Affects", "Proposed change", "Evidence", "Rubric threshold met",
+            "Reasoning", "Supersedes", "Raised", "Last updated", "Runs pending", "Outcome"]
 W_STATUS = {"watching", "promoted", "dropped"}
 TREND_FIELDS = [
     "trend_id", "status", "category", "title", "definition", "importance",
@@ -57,6 +63,11 @@ def load_jsonl(path):
         except Exception as exc:  # noqa: BLE001
             err(f"{path.relative_to(ROOT)} line {n}: cannot parse JSON ({exc})")
     return rows
+
+
+def strip_fences(text):
+    """Remove fenced code blocks so templates and examples are not parsed."""
+    return re.sub(r"```.*?```", "", text, flags=re.S)
 
 
 def score(value, name, ctx):
@@ -128,21 +139,65 @@ for t in trends:
         err(f"{ctx}: active trend has no evidence")
     if t["status"] == "merged" and not t["merged_into"]:
         err(f"{ctx}: merged trend needs merged_into")
+    if t["status"] != "merged" and t["merged_into"]:
+        err(f"{ctx}: merged_into set but status is {t['status']!r}")
+    split_into = t.get("split_into") or []
+    if t["status"] == "split" and len(split_into) < 2:
+        err(f"{ctx}: split trend needs split_into with at least two successor IDs")
+    if t["status"] != "split" and split_into:
+        err(f"{ctx}: split_into set but status is {t['status']!r}")
+    origin = t.get("origin")
+    if origin is not None:
+        if not isinstance(origin, dict) or origin.get("type") not in ORIGIN_TYPES or not origin.get("from"):
+            err(f"{ctx}: origin must be null or {{'type': promoted|proposal|split, 'from': ID}}")
+    if t["status"] != "active" and not any(h.get("event") for h in t["history"]):
+        warn(f"{ctx}: status {t['status']!r} but no history entry records the event")
     if not t["history"]:
         err(f"{ctx}: empty history")
     else:
+        hist_runs = [h.get("run_id") for h in t["history"]]
+        if len(set(hist_runs)) != len(hist_runs):
+            err(f"{ctx}: more than one history entry for the same run")
         for h in t["history"]:
             if h.get("run_id") not in run_ids:
                 err(f"{ctx}: history run_id {h.get('run_id')!r} not in run_log")
+            if "event" in h and not isinstance(h["event"], str):
+                err(f"{ctx}: history event must be text")
         if t["status"] == "active" and latest and t["history"][-1].get("run_id") != latest:
             err(f"{ctx}: no history entry for latest run {latest}")
         if t["history"][-1].get("importance") != t["importance"]:
             err(f"{ctx}: latest history importance differs from current importance")
     if t["momentum"] == "baseline" and len(t["history"]) > 1:
         warn(f"{ctx}: momentum still 'baseline' after first run")
+by_id = {t.get("trend_id"): t for t in trends}
 for t in trends:
-    if t.get("merged_into") and t["merged_into"] not in trend_ids:
-        err(f"register {t['trend_id']}: merged_into {t['merged_into']} not found")
+    tid = t.get("trend_id")
+    if t.get("merged_into"):
+        survivor = by_id.get(t["merged_into"])
+        if survivor is None or t["merged_into"] == tid:
+            err(f"register {tid}: merged_into {t['merged_into']} not found")
+        else:
+            moved = set(survivor.get("evidence_ids", [])) | set(survivor.get("counter_evidence_ids", []))
+            missing = (set(t.get("evidence_ids", [])) | set(t.get("counter_evidence_ids", []))) - moved
+            if missing:
+                err(f"register {tid}: evidence not copied to survivor {t['merged_into']}: {sorted(missing)}")
+    if t.get("status") == "split":
+        succ = t.get("split_into") or []
+        unknown = [x for x in succ if x not in by_id or x == tid]
+        if unknown:
+            err(f"register {tid}: split_into references unknown IDs {unknown}")
+        pooled = set()
+        for x in succ:
+            if x in by_id:
+                pooled |= set(by_id[x].get("evidence_ids", [])) | set(by_id[x].get("counter_evidence_ids", []))
+        missing = (set(t.get("evidence_ids", [])) | set(t.get("counter_evidence_ids", []))) - pooled
+        if missing:
+            err(f"register {tid}: evidence not allocated to any successor: {sorted(missing)}")
+    origin = t.get("origin") or {}
+    if origin.get("type") == "split" and origin.get("from") not in by_id:
+        err(f"register {tid}: origin split from unknown trend {origin.get('from')}")
+    if origin.get("type") == "promoted" and origin.get("from") not in watch_ids:
+        err(f"register {tid}: origin promoted from unknown watch item {origin.get('from')}")
 
 # ---------------------------------------------------------------- ledger
 ledger = load_jsonl(STATE / "ledger.jsonl")
@@ -194,6 +249,85 @@ for w in wl.get("items", []):
         if ref not in ev_ids:
             err(f"watchlist {w.get('id')}: evidence {ref} not in ledger")
 
+# ---------------------------------------------------------------- proposals
+proposals = {}
+pending_path = ROOT / "proposals" / "pending.md"
+decisions_path = ROOT / "proposals" / "decisions.md"
+if pending_path.exists():
+    body = strip_fences(pending_path.read_text(encoding="utf-8"))
+    for block in re.split(r"(?m)^### ", body)[1:]:
+        head, _, rest = block.partition("\n")
+        pid = head.split(" ")[0].strip()
+        ctx = f"proposal {pid}"
+        if not P_ID.match(pid):
+            err(f"proposals: bad proposal heading {head!r}")
+            continue
+        if pid in proposals:
+            err(f"{ctx}: duplicate proposal ID")
+        fields = dict(re.findall(r"(?m)^- ([A-Za-z ]+): (.*)$", rest))
+        proposals[pid] = fields
+        missing = [f for f in P_FIELDS if f not in fields]
+        if missing:
+            err(f"{ctx}: missing fields {missing}")
+            continue
+        if fields["Type"].strip() not in P_TYPES:
+            err(f"{ctx}: Type must be one of {sorted(P_TYPES)}")
+        affects = [a.strip() for a in fields["Affects"].split(",") if a.strip()]
+        fields["_affects"] = frozenset(affects)
+        for a in affects:
+            if a not in valid_targets and not a.lower().startswith("new"):
+                err(f"{ctx}: Affects references unknown ID {a}")
+        if not OUTCOME.match(fields["Outcome"].strip()):
+            err(f"{ctx}: bad Outcome {fields['Outcome']!r}")
+        for f in ("Raised", "Last updated"):
+            if not FULL_DATE.match(fields[f].strip()):
+                err(f"{ctx}: bad {f}")
+        try:
+            runs_pending = int(fields["Runs pending"].strip())
+            if fields["Outcome"].strip() == "pending" and runs_pending >= 3:
+                warn(f"{ctx}: STALE - pending for {runs_pending} runs")
+        except ValueError:
+            err(f"{ctx}: Runs pending must be a whole number")
+    for pid, f in proposals.items():
+        sup = f.get("Supersedes", "none").strip()
+        if sup.lower() != "none" and sup not in proposals:
+            err(f"proposal {pid}: Supersedes unknown proposal {sup}")
+    live = {}
+    for pid, f in proposals.items():
+        if f.get("Outcome", "").strip() == "pending" and "_affects" in f:
+            key = (f["Type"].strip(), f["_affects"])
+            if key in live:
+                err(f"proposal {pid}: duplicates pending proposal {live[key]} (same type and affected IDs)")
+            live[key] = pid
+
+if decisions_path.exists():
+    seen = set()
+    for line in strip_fences(decisions_path.read_text(encoding="utf-8")).splitlines():
+        line = line.strip()
+        if not re.match(r"^(APPROVE|REJECT)\b", line):
+            continue
+        m = re.match(r"^(APPROVE|REJECT)\s+(P-\d{4}-\d{2}-\d{2}-\d{2})\b", line)
+        if not m:
+            err(f"decisions: cannot parse {line!r}")
+            continue
+        verb, pid = m.groups()
+        if pid in seen:
+            err(f"decisions: more than one decision for {pid}")
+        seen.add(pid)
+        if pid not in proposals:
+            err(f"decisions: {pid} not found in proposals/pending.md")
+            continue
+        outcome = proposals[pid].get("Outcome", "").strip()
+        applied = "(applied" in line
+        if applied and outcome == "pending":
+            err(f"decisions: {pid} marked applied but proposal Outcome is still pending")
+        elif applied and verb == "APPROVE" and not outcome.startswith("applied"):
+            err(f"decisions: {pid} approved and applied but Outcome is {outcome!r}")
+        elif applied and verb == "REJECT" and not outcome.startswith("rejected"):
+            err(f"decisions: {pid} rejected and applied but Outcome is {outcome!r}")
+        if not applied and outcome != "pending":
+            warn(f"decisions: {pid} not yet applied but proposal Outcome is {outcome!r}")
+
 # ---------------------------------------------------------------- run outputs
 if latest:
     run_dir = ROOT / "runs" / latest
@@ -216,5 +350,5 @@ for w in warnings:
 for e in errors:
     print(f"ERROR: {e}")
 print(f"\n{len(trends)} trends, {len(watch_ids)} watch items, {len(ledger)} evidence entries, "
-      f"{len(run_ids)} runs.  {len(errors)} errors, {len(warnings)} warnings.")
+      f"{len(proposals)} proposals, {len(run_ids)} runs.  {len(errors)} errors, {len(warnings)} warnings.")
 sys.exit(1 if errors else 0)
