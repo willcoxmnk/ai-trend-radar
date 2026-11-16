@@ -1,6 +1,6 @@
 {
   "rubric_version": "2.0",
-  "updated": "2026-11-13",
+  "updated": "2026-11-16",
   "trends": [
     {
       "trend_id": "DM-01",
@@ -9,38 +9,51 @@
       "title": "Semantics becomes core infrastructure",
       "definition": "Shared, machine-readable business meaning (semantic layers, knowledge graphs, GraphRAG) becomes a prerequisite for trustworthy AI and agents, with open interchange standards emerging.",
       "importance": 5,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 5,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "Gartner names semantics one of three forces shaping D&A and predicts universal semantic layers become critical infrastructure by 2030 (EV-0001, EV-0002). Open Semantic Interchange spec released and moved to the Apache Incubator as Apache Ossie (EV-0003, EV-0004). Signals S1, S2, S3.",
+      "rationale": "Gartner names semantics one of three forces shaping D&A and predicts universal semantic layers become critical infrastructure by 2030 (EV-0001, EV-0002). Open Semantic Interchange spec released and moved to the Apache Incubator as Apache Ossie (EV-0003, EV-0004). Signals S1, S2, S3. 2026-11-16: held at 5.  Gartner's 2027 strategic trends add AI context platforms, with a forecast that semantics-first AI-ready data lifts agent accuracy by up to 80% (EV-0024, secondary); the BIS lists semantic layers among data-readiness priorities (EV-0071); Apache Ossie remains pre-1.0 in incubation (EV-0027); major platforms ship semantic layers for agents (EV-0025, EV-0026, tier 3-4).  Counter: agentic dense retrieval closes most of the GraphRAG gap (EV-0033), and analysts warn of lock-in in proprietary semantic layers (EV-0026).  Signals S1, S3, S5.  Momentum stable: no tier 1-2 primary source moved the score. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0001",
         "EV-0002",
         "EV-0003",
-        "EV-0004"
+        "EV-0004",
+        "EV-0024",
+        "EV-0025",
+        "EV-0026",
+        "EV-0027",
+        "EV-0032",
+        "EV-0071"
       ],
-      "counter_evidence_ids": [],
+      "counter_evidence_ids": [
+        "EV-0033"
+      ],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-08",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-04",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 5,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 5,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Multi-carrier groups need single definitions of yield, RASK and load factor before agents can answer commercial questions consistently."
@@ -55,38 +68,45 @@
       "title": "Platforms converge on open table formats; competition shifts to catalogues and governance",
       "definition": "Data and analytics platforms consolidate on open storage formats, chiefly Apache Iceberg, with differentiation moving to catalogues, table maintenance and access control for agents.",
       "importance": 3,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 3,
+      "momentum": "stable",
       "confidence": "medium",
-      "rationale": "Gartner lists platform convergence as a driving force (EV-0001). Iceberg adoption treated as settled by practitioners (EV-0005), but survey data suggests warehouses remain the primary paradigm for most teams (EV-0006). Mostly tier 4 evidence beyond Gartner.",
+      "rationale": "Gartner lists platform convergence as a driving force (EV-0001). Iceberg adoption treated as settled by practitioners (EV-0005), but survey data suggests warehouses remain the primary paradigm for most teams (EV-0006). Mostly tier 4 evidence beyond Gartner. 2026-11-16: held at 3.  New support is tier 3-4 only: Iceberg catalogue federation across rival catalogues (EV-0025) and write access to Iceberg through external catalogues (EV-0026).  No tier 1-2 evidence in the window. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0001",
         "EV-0004",
         "EV-0005",
-        "EV-0006"
+        "EV-0006",
+        "EV-0025",
+        "EV-0026"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-08",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-04",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 3,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 3,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Relevant to commercial data estates through cost and flexibility; no airline-specific evidence yet."
@@ -101,17 +121,18 @@
       "title": "Real-time, event-driven data becomes a prerequisite for agents",
       "definition": "Batch data delivery gives way to continuous streaming so that agents can act on current state.",
       "importance": 3,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 3,
+      "momentum": "stable",
       "confidence": "medium",
-      "rationale": "Gartner forecasts data streaming for agentic AI to rise from under 15% in 2025 to over 60% by 2028 (EV-0001). Single primary source so far. Re-baselined from 4 to 3 under rubric 2.0: a single primary source does not meet the threshold for 4.",
+      "rationale": "Gartner forecasts data streaming for agentic AI to rise from under 15% in 2025 to over 60% by 2028 (EV-0001). Single primary source so far. Re-baselined from 4 to 3 under rubric 2.0: a single primary source does not meet the threshold for 4. 2026-11-16: held at 3.  Only vendor evidence this run, a real-time context engine for agents (EV-0028, tier 4), which cannot move a score. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
-        "EV-0001"
+        "EV-0001",
+        "EV-0028"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-06-16",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-08-18",
       "merged_into": null,
       "history": [
         {
@@ -119,18 +140,23 @@
           "importance": 3,
           "momentum": "baseline",
           "event": "re-baselined under rubric 2.0"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 3,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Continuous pricing, disruption handling and in-journey offers all depend on current inventory and demand signals."
@@ -145,17 +171,17 @@
       "title": "Agents start managing the data estate",
       "definition": "AI agents take on data quality, lineage, governance and policy enforcement, including translating policy into machine-verifiable data contracts.",
       "importance": 3,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 3,
+      "momentum": "stable",
       "confidence": "medium",
-      "rationale": "Gartner trend and prediction on agentic data management and automated data contracts (EV-0001, EV-0002). Forecast-led, little deployment evidence yet.",
+      "rationale": "Gartner trend and prediction on agentic data management and automated data contracts (EV-0001, EV-0002). Forecast-led, little deployment evidence yet. 2026-11-16: held at 3.  No new supporting evidence this run; the blind scan found governance culture, not tooling, framed as the binding constraint (EV-0031, tagged to AI-03).  One run without support is not yet a fading signal. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0001",
         "EV-0002"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
+      "last_changed": "2026-11-16",
       "last_evidence_date": "2026-06-16",
       "merged_into": null,
       "history": [
@@ -163,18 +189,23 @@
           "run_id": "2026-11-13",
           "importance": 3,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 3,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Indirect: frees commercial data teams from stewardship work and improves data readiness for AI."
@@ -189,36 +220,44 @@
       "title": "Capability keeps compounding",
       "definition": "Frontier model capability continues to improve across reasoning, science, maths and computer use, with the US-China gap narrowing.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 4,
+      "momentum": "stable",
       "confidence": "medium",
-      "rationale": "Stanford AI Index 2026 as reported: human-level or better on PhD science and competition maths, OSWorld success from about 12% to about 66%, US-China gap 2.7 points (EV-0007, EV-0008). Confidence held at medium because figures come from secondary reporting.",
+      "rationale": "Stanford AI Index 2026 as reported: human-level or better on PhD science and competition maths, OSWorld success from about 12% to about 66%, US-China gap 2.7 points (EV-0007, EV-0008). Confidence held at medium because figures come from secondary reporting. 2026-11-16: held at 4.  METR estimates frontier progress on well-specified tasks at about 1.9x the 2024-25 rate, mostly from AI used in AI research, though the estimate falls to about 1.4x on non-lab data (EV-0034).  Releases arrive weeks apart (EV-0036) and a lab restricted a cyber-capable model to defenders (EV-0037).  One new primary tier 1 source is not enough for 5.  Confidence stays medium: the AI Index figures remain secondary. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0007",
-        "EV-0008"
+        "EV-0008",
+        "EV-0034",
+        "EV-0036",
+        "EV-0037"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-04-13",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-09",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 4,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Sets the ceiling for what commercial analytics and agents can do; relevance is general rather than airline-specific."
@@ -233,39 +272,48 @@
       "title": "The unit price of intelligence collapses while total AI bills rise",
       "definition": "Cost per unit of capability falls by an order of magnitude or more each year, but agentic workloads consume far more compute, so total spend and cost constraints increase.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 4,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "Epoch AI and an arXiv study document steep price declines at fixed capability alongside rising frontier running costs (EV-0010, EV-0011). McKinsey finds about 20% of organisations constrained by AI operating costs (EV-0012). Signals S1, S2.",
+      "rationale": "Epoch AI and an arXiv study document steep price declines at fixed capability alongside rising frontier running costs (EV-0010, EV-0011). McKinsey finds about 20% of organisations constrained by AI operating costs (EV-0012). Signals S1, S2. 2026-11-16: held at 4.  New frontier models launched with 20-50% list-price cuts (EV-0036), while compute commitments keep rising (EV-0037); grid connection is a binding constraint on AI compute (EV-0062).  All tier 3, so no score movement. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0010",
         "EV-0011",
-        "EV-0012"
+        "EV-0012",
+        "EV-0036",
+        "EV-0037",
+        "EV-0062"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-08",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-09",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 4,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 4,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
+        "energy_utilities": "Data-centre demand for AI compute is reshaping grid connection rules and investment for utilities.",
         "travel_transportation": "Changes the economics of high-volume use cases such as offer personalisation and scenario simulation."
       },
       "split_into": [],
@@ -278,38 +326,51 @@
       "title": "Broad adoption, concentrated value",
       "definition": "AI use is near-universal and individuals report productivity gains, but enterprise-level financial impact remains rare and flat.",
       "importance": 5,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 5,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "McKinsey: 80% report personal productivity gains, 37% any EBIT impact (flat), about 6% high performers (EV-0012). Stanford coverage reports 14-26% productivity gains in some functions (EV-0007). Signals S1, S2.",
+      "rationale": "McKinsey: 80% report personal productivity gains, 37% any EBIT impact (flat), about 6% high performers (EV-0012). Stanford coverage reports 14-26% productivity gains in some functions (EV-0007). Signals S1, S2. 2026-11-16: held at 5.  McKinsey figures confirmed via secondary coverage (EV-0038).  ECB finds over 90% of supervised banks using AI (EV-0064); BIS finds central-bank pilots hard to scale and expectations moderating (EV-0071); Gartner warns governance culture blocks AI governance (EV-0031).  Counter: BCG reports about half of firms generating meaningful value, under a changed definition (EV-0039).  Signals S2, S4, S5. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0007",
-        "EV-0012"
+        "EV-0012",
+        "EV-0031",
+        "EV-0032",
+        "EV-0038",
+        "EV-0064",
+        "EV-0071"
       ],
-      "counter_evidence_ids": [],
+      "counter_evidence_ids": [
+        "EV-0039"
+      ],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-08",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-09",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 5,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 5,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 4,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
+        "financial_services": "Banks report near-universal AI use but central banks and supervisors see moderating expectations as pilots prove hard to scale.",
         "travel_transportation": "The core management question for commercial functions: converting analyst productivity into revenue and margin."
       },
       "split_into": [],
@@ -322,39 +383,61 @@
       "title": "Sovereignty, transparency and regulation become strategic variables",
       "definition": "Geopolitics, falling model transparency and evolving regulation (notably the EU AI Act) shape model choice, data residency and vendor strategy.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
-      "confidence": "medium",
-      "rationale": "Gartner ranks sovereign AI first among 2026 D&A trends (EV-0001). Transparency index reportedly fell from 58 to 40 (EV-0009, low-tier secondary). EU AI Act high-risk obligations delayed to December 2027 and August 2028 (EV-0022).",
+      "importance_prev": 4,
+      "momentum": "stable",
+      "confidence": "high",
+      "rationale": "Gartner ranks sovereign AI first among 2026 D&A trends (EV-0001). Transparency index reportedly fell from 58 to 40 (EV-0009, low-tier secondary). EU AI Act high-risk obligations delayed to December 2027 and August 2028 (EV-0022). 2026-11-16: held at 4; confidence raised to high.  The AI Omnibus entered into force on 27 July 2026, moving Annex III high-risk duties to December 2027 while general-purpose and transparency duties apply now (EV-0040, EV-0042).  The Council's data Omnibus position keeps the GDPR personal-data definition (EV-0029, EV-0030).  Gartner names sovereign tech a 2027 strategic trend (EV-0024, secondary).  Open-weight use rises while Chinese-origin model use falls on sanctions risk (EV-0043).  Sector regulators apply existing regimes (EV-0060, EV-0069).  Confidence high: independent primary tier 1-2 sources now include Gartner (EV-0001), the ECB (EV-0064) and the FCA (EV-0069).  Signals S1, S3, S4. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0001",
         "EV-0009",
-        "EV-0022"
+        "EV-0022",
+        "EV-0024",
+        "EV-0029",
+        "EV-0030",
+        "EV-0040",
+        "EV-0041",
+        "EV-0042",
+        "EV-0043",
+        "EV-0060",
+        "EV-0061",
+        "EV-0063",
+        "EV-0064",
+        "EV-0065",
+        "EV-0069",
+        "EV-0070"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-06-16",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-09",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 4,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 4,
+        "healthcare_life_sciences": 4,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 4,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
+        "financial_services": "Supervisors apply existing conduct and resilience rules to AI and press banks on dependence on a few AI and cloud providers.",
+        "healthcare_life_sciences": "FDA is setting generative-AI device policy and its FY2027 guidance agenda centres on AI-enabled software.",
+        "defence_aerospace": "Allied governments are moving to co-develop sovereign military AI, making provenance and control procurement criteria.",
         "travel_transportation": "European carriers face residency, vendor-concentration and compliance choices for AI used in pricing and customer interactions."
       },
       "split_into": [],
@@ -367,37 +450,45 @@
       "title": "The horizon of autonomous work lengthens fast",
       "definition": "The length and complexity of tasks agents can complete without human help is growing exponentially.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 4,
+      "momentum": "stable",
       "confidence": "medium",
-      "rationale": "METR finds a roughly 7-month doubling over six years (EV-0014), with its 2026 update implying about 3.5-4 months for recent models (EV-0015, secondary). OSWorld gains support the direction (EV-0007). Benchmarks are software-heavy and set at 50% reliability.",
+      "rationale": "METR finds a roughly 7-month doubling over six years (EV-0014), with its 2026 update implying about 3.5-4 months for recent models (EV-0015, secondary). OSWorld gains support the direction (EV-0007). Benchmarks are software-heavy and set at 50% reliability. 2026-11-16: held at 4.  METR finds agents completing weeks-long software tasks (EV-0059) and estimates frontier progress has roughly doubled in pace (EV-0034).  Counter-signal on measurement: METR has stopped updating its time-horizon tracker because readings above about 16 hours are unreliable (EV-0035).  Confidence stays medium: all primary support comes from one organisation. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0007",
         "EV-0014",
-        "EV-0015"
+        "EV-0015",
+        "EV-0034",
+        "EV-0035",
+        "EV-0059"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-04-13",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-05",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 4,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Indicates how quickly multi-step analytical work (for example building and testing a pricing scenario) becomes delegable."
@@ -412,39 +503,53 @@
       "title": "From pilots to scale, with a shake-out",
       "definition": "Large enterprises are moving agents into production while many projects are cancelled and agent washing inflates the market.",
       "importance": 5,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 5,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "McKinsey: 40% of large firms scaling agents, up from 27% (EV-0012). Gartner: over 40% of agentic projects cancelled by end-2027, only about 130 genuine vendors, yet 15% of daily decisions autonomous by 2028 (EV-0013). Signals S1, S2, S5.",
+      "rationale": "McKinsey: 40% of large firms scaling agents, up from 27% (EV-0012). Gartner: over 40% of agentic projects cancelled by end-2027, only about 130 genuine vendors, yet 15% of daily decisions autonomous by 2028 (EV-0013). Signals S1, S2, S5. 2026-11-16: held at 5.  Forrester finds most firms adopting agents but few in real production, with agent sprawl (EV-0047).  Deloitte finds 15% have scaled multi-agent systems (EV-0048) and 21% have mature agent governance (EV-0049).  A TCS survey finds only 10% let agents act without approval (EV-0046).  McKinsey's 27% to 40% scaling figure is confirmed (EV-0038).  BCG expects agents to deliver about 40% of AI value by 2030 (EV-0039).  Signals S1, S2, S5. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0012",
-        "EV-0013"
+        "EV-0013",
+        "EV-0038",
+        "EV-0039",
+        "EV-0045",
+        "EV-0046",
+        "EV-0047",
+        "EV-0048",
+        "EV-0049",
+        "EV-0050"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-08",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-06",
       "merged_into": null,
       "history": [
         {
           "run_id": "2026-11-13",
           "importance": 5,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 5,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 4
       },
       "industry_notes": {
-        "travel_transportation": "Argues for selecting agentic use cases by clear value and avoiding vendor claims that are rebadged automation."
+        "travel_transportation": "Argues for selecting agentic use cases by clear value and avoiding vendor claims that are rebadged automation.",
+        "telecommunications": "Operators are deploying guard-railed support agents at scale and moving towards level 4 autonomous network operations."
       },
       "split_into": [],
       "origin": null
@@ -456,18 +561,21 @@
       "title": "Open protocols become the plumbing",
       "definition": "Agent connectivity standards (Model Context Protocol, Agent2Agent, agent payments) consolidate under neutral open-source governance.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 4,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "Agentic AI Foundation launched under the Linux Foundation with MCP, goose and AGENTS.md (EV-0016); A2A joined in August 2026 with over 150 partners (EV-0017); membership reported to exceed 250 (EV-0018). Signal S3.",
+      "rationale": "Agentic AI Foundation launched under the Linux Foundation with MCP, goose and AGENTS.md (EV-0016); A2A joined in August 2026 with over 150 partners (EV-0017); membership reported to exceed 250 (EV-0018). Signal S3. 2026-11-16: held at 4.  The July 2026 MCP specification makes the core stateless and hardens authorisation, with SDK downloads near half a billion a month (EV-0053).  AAIF formalises a feature lifecycle and conformance tests (EV-0054), and NIST's agent standards initiative covers interoperable protocols (EV-0051).  No protocol news in the window, so held. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0016",
         "EV-0017",
-        "EV-0018"
+        "EV-0018",
+        "EV-0051",
+        "EV-0053",
+        "EV-0054"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
+      "last_changed": "2026-11-16",
       "last_evidence_date": "2026-08-17",
       "merged_into": null,
       "history": [
@@ -475,18 +583,23 @@
           "run_id": "2026-11-13",
           "importance": 4,
           "momentum": "baseline"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 3,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
         "travel_transportation": "Lowers integration cost for airline systems and makes it easier for third-party agents to transact with airlines."
@@ -500,19 +613,30 @@
       "category": "agentic",
       "title": "Governing decisions, not just data",
       "definition": "As agents act, governance shifts to modelling, auditing and evaluating decisions at runtime.",
-      "importance": 3,
-      "importance_prev": null,
-      "momentum": "baseline",
-      "confidence": "medium",
-      "rationale": "Gartner decision governance trend and forecast that modelled decisions will be five times more trusted by 2029 (EV-0001); predicts half of agent failures by 2030 will stem from weak runtime governance and calls for an evaluation stage in analytic workflows (EV-0002). Gartner-only so far. Re-baselined from 4 to 3 under rubric 2.0: both sources are Gartner, so not independent.",
+      "importance": 4,
+      "importance_prev": 3,
+      "momentum": "rising",
+      "confidence": "high",
+      "rationale": "Gartner decision governance trend and forecast that modelled decisions will be five times more trusted by 2029 (EV-0001); predicts half of agent failures by 2030 will stem from weak runtime governance and calls for an evaluation stage in analytic workflows (EV-0002). Gartner-only so far. Re-baselined from 4 to 3 under rubric 2.0: both sources are Gartner, so not independent. 2026-11-16: raised from 3 to 4 on independent tier 1-2 evidence (S1, S2, S3).  Gartner names AI agent identity a 2027 strategic trend and expects a quarter of breaches to trace to agent abuse by 2028 (EV-0024, secondary).  NIST runs an agent standards initiative on identity and authorisation (EV-0051).  METR documents an uncontrolled multi-agent incident and calls for independent investigation (EV-0052).  Forrester advises governing each agent as an owned identity (EV-0047), and Deloitte finds only 21% have mature agent governance (EV-0049).  Financial supervisors (EV-0066, EV-0067, EV-0069) inform the industry score only.  Momentum rising because importance rose on tier 1-2 evidence.  Confidence high: Gartner, NIST and METR are independent primary tier 1-2 sources. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0001",
-        "EV-0002"
+        "EV-0002",
+        "EV-0024",
+        "EV-0047",
+        "EV-0049",
+        "EV-0051",
+        "EV-0052",
+        "EV-0058",
+        "EV-0066",
+        "EV-0067",
+        "EV-0068",
+        "EV-0069",
+        "EV-0071"
       ],
       "counter_evidence_ids": [],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-06-16",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-06",
       "merged_into": null,
       "history": [
         {
@@ -520,20 +644,27 @@
           "importance": 3,
           "momentum": "baseline",
           "event": "re-baselined under rubric 2.0"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "rising",
+          "event": "importance raised from 3 to 4"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 5,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 3,
+        "government_public_sector": 3,
         "travel_transportation": 3,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 3,
+        "telecommunications": 3
       },
       "industry_notes": {
+        "financial_services": "US and UK supervisors now set expectations for agent inventories, kill-switches, permissions and vendor terms, outside classic model risk rules.",
         "travel_transportation": "Pricing and offer decisions made or recommended by agents need explicit models, guardrails and audit trails."
       },
       "split_into": [],
@@ -546,20 +677,25 @@
       "title": "The customer's agent becomes a sales channel",
       "definition": "Consumers and business buyers delegate search, comparison and purchasing to third-party AI agents, making machine-readable offers and agent protocols part of distribution strategy.  Earliest and best-evidenced in travel.",
       "importance": 4,
-      "importance_prev": null,
-      "momentum": "baseline",
+      "importance_prev": 4,
+      "momentum": "stable",
       "confidence": "high",
-      "rationale": "IATA: 49% of passengers have used AI for travel planning, Europe lowest at 35% (EV-0020, secondary); IATA urges airlines to retain control of data and customer relationships as agents reshape discovery (EV-0019); ONE Order positioned as foundation for agentic distribution (EV-0021); AP2 extends A2A to payments (EV-0017). Signals S3, S4. Re-baselined from 5 to 4 under rubric 2.0: the evidence is tier 2-3 and largely travel-specific, which supports high relevance to travel but not a cross-industry 5.",
+      "rationale": "IATA: 49% of passengers have used AI for travel planning, Europe lowest at 35% (EV-0020, secondary); IATA urges airlines to retain control of data and customer relationships as agents reshape discovery (EV-0019); ONE Order positioned as foundation for agentic distribution (EV-0021); AP2 extends A2A to payments (EV-0017). Signals S3, S4. Re-baselined from 5 to 4 under rubric 2.0: the evidence is tier 2-3 and largely travel-specific, which supports high relevance to travel but not a cross-industry 5. 2026-11-16: held at 4.  Adobe forecasts AI-referred US retail traffic up about 130% this holiday season (EV-0056, vendor data), and Salesforce expects a fifth of holiday traffic from agents (EV-0057, tier 4).  Counter: Visa's benchmark finds 42.8% of agent shopping runs fail, often still completing a purchase (EV-0055, tier 4), and payment liability remains unresolved (EV-0058).  No new tier 1-2 evidence, so held. Defence and aerospace scored 2 on first assessment: buying there runs through formal procurement rather than consumer or business agents. Industry relevance: unassessed industries given a first assessment of 3 (general enterprise relevance, no industry-specific evidence) unless stated.",
       "evidence_ids": [
         "EV-0017",
         "EV-0019",
         "EV-0020",
-        "EV-0021"
+        "EV-0021",
+        "EV-0056",
+        "EV-0057",
+        "EV-0058"
       ],
-      "counter_evidence_ids": [],
+      "counter_evidence_ids": [
+        "EV-0055"
+      ],
       "first_seen": "2026-11-13",
-      "last_changed": "2026-11-13",
-      "last_evidence_date": "2026-10-28",
+      "last_changed": "2026-11-16",
+      "last_evidence_date": "2026-11-05",
       "merged_into": null,
       "history": [
         {
@@ -567,21 +703,28 @@
           "importance": 4,
           "momentum": "baseline",
           "event": "re-baselined under rubric 2.0"
+        },
+        {
+          "run_id": "2026-11-16",
+          "importance": 4,
+          "momentum": "stable"
         }
       ],
       "industry_relevance": {
-        "financial_services": null,
-        "healthcare_life_sciences": null,
-        "manufacturing": null,
-        "energy_utilities": null,
-        "defence_aerospace": null,
-        "government_public_sector": null,
+        "financial_services": 4,
+        "healthcare_life_sciences": 3,
+        "manufacturing": 3,
+        "energy_utilities": 3,
+        "defence_aerospace": 2,
+        "government_public_sector": 3,
         "travel_transportation": 5,
-        "retail_fmcg": null,
-        "telecommunications": null
+        "retail_fmcg": 4,
+        "telecommunications": 3
       },
       "industry_notes": {
-        "travel_transportation": "Directly affects distribution control, offer representation and the Offers and Orders roadmap for airlines."
+        "financial_services": "Agentic payments put card issuers and networks at the centre of unresolved liability for agent-initiated purchases.",
+        "travel_transportation": "Directly affects distribution control, offer representation and the Offers and Orders roadmap for airlines.",
+        "retail_fmcg": "AI-referred retail traffic is forecast to more than double this holiday season, making machine-readable product data and shopper agents a channel question."
       },
       "split_into": [],
       "origin": null

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-16",
   "items": [
     {
       "id": "W-01",
@@ -9,9 +9,11 @@
       "evidence_ids": [
         "EV-0002",
         "EV-0007",
-        "EV-0023"
+        "EV-0023",
+        "EV-0044",
+        "EV-0045"
       ],
-      "runs_seen": 1,
+      "runs_seen": 2,
       "status": "watching"
     },
     {
@@ -20,9 +22,10 @@
       "description": "Gartner expects agents in physical environments to generate far more data than digital applications by 2029.  Most relevant to manufacturing, energy and utilities, defence and aerospace, and transport operations.",
       "first_seen": "2026-11-13",
       "evidence_ids": [
-        "EV-0002"
+        "EV-0002",
+        "EV-0024"
       ],
-      "runs_seen": 1,
+      "runs_seen": 2,
       "status": "watching"
     },
     {
@@ -31,7 +34,23 @@
       "description": "Organisations report building software with coding agents instead of buying it, which could change how commercial teams source analytical tools.",
       "first_seen": "2026-11-13",
       "evidence_ids": [
-        "EV-0012"
+        "EV-0012",
+        "EV-0024"
+      ],
+      "runs_seen": 2,
+      "status": "watching"
+    },
+    {
+      "id": "W-04",
+      "title": "Frontier AI shifts the cyber balance; supervisors demand action",
+      "description": "Frontier models make finding and exploiting vulnerabilities faster and cheaper, and agents create new incident types.  Supervisors are starting to require frontier-AI cyber action plans and to flag concentration on a few technology providers.  Candidate trend in the AI/ML domain; overlaps AG-04 on agent security.",
+      "first_seen": "2026-11-16",
+      "evidence_ids": [
+        "EV-0024",
+        "EV-0037",
+        "EV-0052",
+        "EV-0064",
+        "EV-0065"
       ],
       "runs_seen": 1,
       "status": "watching"
